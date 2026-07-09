@@ -5,6 +5,8 @@ import { Navigate, Route, Routes } from "react-router";
 import { NonAuthLayout, ProtecteLayout, RootLayout } from "./layouts";
 import { GamePlayPage, GamesPage, LoginPage } from "./pages";
 
+import { ROUTES_CONFIG } from "./lib";
+
 export const AppRoutes: FC = () => {
   return (
     <Routes>
@@ -14,8 +16,11 @@ export const AppRoutes: FC = () => {
         </Route>
 
         <Route element={<ProtecteLayout />}>
-          <Route path="games" element={<GamesPage />} />
-          <Route path="games/:code" element={<GamePlayPage />} />
+          <Route path={ROUTES_CONFIG.games} element={<GamesPage />} />
+          <Route
+            path={`${ROUTES_CONFIG.games}/:code`}
+            element={<GamePlayPage />}
+          />
         </Route>
 
         <Route path="*" element={<Navigate to="/games" replace />} />

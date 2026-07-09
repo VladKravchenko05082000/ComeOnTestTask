@@ -15,7 +15,7 @@
 
   --breakpoint-mobile: 320px;
   --breakpoint-tablet: 768px;
-  --breakpoint-computer: 992px;
+  --breakpoint-laptop: 992px;
   --breakpoint-large: 1400px;
   --breakpoint-wide: 1920px;
 
@@ -76,9 +76,5 @@
 
   body {
     @apply bg-page text-foreground antialiased;
-  }
-
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-ring;
   }
 }

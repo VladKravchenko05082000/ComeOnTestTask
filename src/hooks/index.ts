@@ -1,2 +1,2 @@
 export { useAuth } from "./useAuth";
-export { useAppDispatch, useAppSelector } from "./store";
+export { useAppDispatch, useAppSelector } from "./selectors";
