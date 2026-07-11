@@ -4,11 +4,19 @@ import type { AxiosError, AxiosRequestConfig } from "axios";
 
 import { axiosInstance } from "./axios";
 
-export type ApiError = {
-  status?: number;
-  data?: unknown;
-  message: string;
-};
+class ApiError extends Error {
+  readonly status?: number;
+
+  constructor(message: string, status?: number) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
+export function isApiError(error: unknown): error is ApiError {
+  return error instanceof ApiError;
+}
 
 export type AxiosBaseQueryArgs = {
   url: string;
@@ -27,14 +35,10 @@ export const axiosBaseQuery =
       if (isAxiosError(error)) {
         const axiosError = error as AxiosError;
         return {
-          error: {
-            status: axiosError.response?.status,
-            data: axiosError.response?.data,
-            message: axiosError.message,
-          },
+          error: new ApiError(axiosError.message, axiosError.response?.status),
         };
       }
 
-      return { error: { message: "Unknown error" } };
+      return { error: new ApiError("Unknown error") };
     }
   };

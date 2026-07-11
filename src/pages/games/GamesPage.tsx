@@ -1,5 +1,7 @@
 import { useState, type FC } from "react";
 
+import { useLogout } from "./hooks/useLogout";
+
 import {
   Button,
   ChevronLeftIcon,
@@ -8,19 +10,15 @@ import {
   SearchIcon,
   UserInfo,
 } from "@/components";
+import { selectPlayer } from "@/store/authSlice/slice";
+import { useAppSelector } from "@/hooks";
 
-import type { Category, Game } from "./types";
 import { MobileCategories } from "./components/MobileCategories";
 import { SectionHeading } from "./components/SectionHeading";
 import { GameCard } from "./components/GameCard";
 import { CategoriesSidebar } from "./components/CategoriesSidebar";
 
-const player = {
-  name: "Eric Beard",
-  avatar: "/images/avatar/eric.jpg",
-  event: "I saw you won 500 SEK last time!",
-};
-
+import type { Category, Game } from "./types";
 const categories: Category[] = [
   { id: 0, name: "ALL" },
   { id: 1, name: "VIDEO SLOTS" },
@@ -53,14 +51,22 @@ const games: Game[] = [
 
 export const GamesPage: FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState(0);
+  const player = useAppSelector(selectPlayer);
+  const { handleLogout, isLoading: isLoggingOut } = useLogout();
 
   return (
     <div>
       <div className="flex flex-col gap-4 tablet:flex-row tablet:items-start tablet:justify-between">
         <div>
-          <UserInfo {...player} />
+          <UserInfo player={player} />
 
-          <Button size="sm" className="mt-4">
+          <Button
+            type="button"
+            size="sm"
+            className="mt-4"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+          >
             <ChevronLeftIcon />
             <span>Log Out</span>
           </Button>
@@ -73,7 +79,12 @@ export const GamesPage: FC = () => {
               type="search"
               size="sm"
               placeholder="Search Game"
-              endIcon={<SearchIcon />}
+              endIcon={
+                <SearchIcon
+                  size={14}
+                  className="pointer-events-auto cursor-pointer"
+                />
+              }
             />
           </InputGroup>
         </div>

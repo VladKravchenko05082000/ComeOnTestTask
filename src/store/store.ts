@@ -1,15 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import { casinoApi } from "./api";
+import { appApi } from "@/api";
+
+import authReducer from "@/store/authSlice/slice";
 
 export const makeStore = () =>
   configureStore({
     reducer: {
-      [casinoApi.reducerPath]: casinoApi.reducer,
+      auth: authReducer,
+      [appApi.reducerPath]: appApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(casinoApi.middleware),
+      getDefaultMiddleware().concat(appApi.middleware),
   });
 
 export const store = makeStore();

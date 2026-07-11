@@ -1,10 +1,19 @@
-import type { FC } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { useAuth } from "@/hooks";
+import { selectIsAuthenticated } from "@/store/authSlice/slice";
+import { useAppSelector } from "@/hooks";
+
+import { CONFIG_NAMES, getCookie, ROUTES_CONFIG } from "@/lib";
+
+import type { FC } from "react";
 
 export const NonAuthLayout: FC = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const isAuthCookie = getCookie(CONFIG_NAMES.isAuth) === "1";
 
-  return isAuthenticated ? <Navigate to="/games" replace /> : <Outlet />;
+  return isAuthenticated && isAuthCookie ? (
+    <Navigate to={`/${ROUTES_CONFIG.games}`} replace />
+  ) : (
+    <Outlet />
+  );
 };

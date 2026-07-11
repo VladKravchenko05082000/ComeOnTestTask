@@ -1,28 +1,39 @@
-import { cn } from "@/lib/utils";
+import { cn, type PlayerInterface } from "@/lib";
+
+import { Skeleton } from "@/components/ui/skeleton/Skeleton";
+import { Image } from "@/components/ui/image/Image";
 
 interface UserInfoProps {
-  name: string;
-  avatar: string;
-  event?: string;
+  player: PlayerInterface | null;
   className?: string;
 }
 
-export const UserInfo = ({ name, avatar, event, className }: UserInfoProps) => {
+export const UserInfo = ({ player, className }: UserInfoProps) => {
   return (
-    <div
-      data-slot="user-info"
-      className={cn("flex items-center gap-3", className)}
-    >
-      <img
-        src={avatar}
-        alt={name}
-        className="size-8 shrink-0 rounded-full object-cover"
-      />
+    <>
+      {player ? (
+        <>
+          <div
+            data-slot="user-info"
+            className={cn("flex items-center gap-3", className)}
+          >
+            <Image
+              src={player.avatar}
+              alt={player.name}
+              className="size-8 shrink-0 rounded-full object-cover"
+            />
 
-      <div>
-        <p className="font-bold">{name}</p>
-        {event && <p className="text-sm text-muted-foreground">{event}</p>}
-      </div>
-    </div>
+            <div>
+              <p className="font-bold">{player.name}</p>
+              {player.event && (
+                <p className="text-sm text-muted-foreground">{player.event}</p>
+              )}
+            </div>
+          </div>
+        </>
+      ) : (
+        <Skeleton className={cn("h-11 w-56", className)} />
+      )}
+    </>
   );
 };

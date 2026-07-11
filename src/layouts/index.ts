@@ -1,2 +1,2 @@
 export { RootLayout } from "./RootLayout";
-export { ProtecteLayout, NonAuthLayout } from "./auth";
+export { ProtectedLayout, NonAuthLayout } from "./auth";
