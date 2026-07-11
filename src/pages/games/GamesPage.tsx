@@ -1,13 +1,17 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 
 import { useLogout } from "./hooks/useLogout";
+import { useFilters } from "./hooks/useFilters";
 
+import { useGetCategoriesQuery, useGetGamesQuery } from "@/api/games/gamesApi";
 import {
   Button,
   ChevronLeftIcon,
+  ErrorBanner,
   Input,
   InputGroup,
   SearchIcon,
+  Skeleton,
   UserInfo,
 } from "@/components";
 import { selectPlayer } from "@/store/authSlice/slice";
@@ -18,41 +22,24 @@ import { SectionHeading } from "./components/SectionHeading";
 import { GameCard } from "./components/GameCard";
 import { CategoriesSidebar } from "./components/CategoriesSidebar";
 
-import type { Category, Game } from "./types";
-const categories: Category[] = [
-  { id: 0, name: "ALL" },
-  { id: 1, name: "VIDEO SLOTS" },
-  { id: 2, name: "SLOT MACHINES" },
-];
-
-const games: Game[] = [
-  {
-    code: "feastingfox",
-    name: "Festing Fox",
-    icon: "/images/game-icon/feasting_fox.png",
-    description:
-      "Tucked away in their cozy little coop, a brood of hens relax blissfully unaware of the danger lurking right outside. Staring in, the hungriest of foxes lays in wait, planning his attack.",
-  },
-  {
-    code: "bookofinferno94",
-    name: "Book Of Inferno",
-    icon: "/images/game-icon/book_of_inferno_logo.png",
-    description:
-      "It's just another day in the life of Anna the Explorer, where a trio of demons have started crossing over into our realm to take over our world and end life as we know it forever.",
-  },
-  {
-    code: "warpwreckers",
-    name: "Warp Wreckers",
-    icon: "/images/game-icon/warp_wreckers_powerglyph_logo.png",
-    description:
-      "On a planet far, far away, the world's top scientists are fighting against the clock to save their civilisation from an incoming asteroid.",
-  },
-];
-
 export const GamesPage: FC = () => {
-  const [activeCategoryId, setActiveCategoryId] = useState(0);
   const player = useAppSelector(selectPlayer);
   const { handleLogout, isLoading: isLoggingOut } = useLogout();
+
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+    isError: isCategoriesError,
+  } = useGetCategoriesQuery();
+
+  const {
+    data: games = [],
+    isLoading: isLoadingGames,
+    isError: isGamesError,
+  } = useGetGamesQuery();
+
+  const { search, activeCategoryId, filteredGames, setSearch, setCategoryId } =
+    useFilters(games);
 
   return (
     <div>
@@ -79,6 +66,8 @@ export const GamesPage: FC = () => {
               type="search"
               size="sm"
               placeholder="Search Game"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
               endIcon={
                 <SearchIcon
                   size={14}
@@ -90,32 +79,61 @@ export const GamesPage: FC = () => {
         </div>
       </div>
 
-      <div className="mt-8">
-        <MobileCategories
-          categories={categories}
-          activeCategoryId={activeCategoryId}
-          onSelect={setActiveCategoryId}
-        />
-      </div>
+      {!isCategoriesError && (
+        <div className="mt-8">
+          <MobileCategories
+            categories={categories}
+            activeCategoryId={activeCategoryId}
+            onSelect={setCategoryId}
+          />
+        </div>
+      )}
 
       <div className="mt-8 flex flex-col gap-8 laptop:flex-row">
         <section className="flex-1">
           <SectionHeading className="mb-4">Games</SectionHeading>
 
-          <ul className="divide-y divide-border">
-            {games.map((game) => (
-              <li key={game.code} className="py-6 first:pt-0">
-                <GameCard game={game} />
-              </li>
-            ))}
-          </ul>
+          {isGamesError ? (
+            <ErrorBanner>
+              Unable to load games. Please try again later.
+            </ErrorBanner>
+          ) : isLoadingGames ? (
+            <ul className="divide-y divide-border">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <li key={index} className="py-6 first:pt-0">
+                  <div className="flex flex-col gap-4 tablet:flex-row">
+                    <Skeleton className="h-20 w-full tablet:w-32 tablet:shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-5 w-40" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-3/4" />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : filteredGames.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No games match your filters.
+            </p>
+          ) : (
+            <ul className="divide-y divide-border">
+              {filteredGames.map((game) => (
+                <li key={game.code} className="py-6 first:pt-0">
+                  <GameCard game={game} />
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
 
-        <CategoriesSidebar
-          categories={categories}
-          activeCategoryId={activeCategoryId}
-          onSelect={setActiveCategoryId}
-        />
+        {!isCategoriesError && !isLoadingCategories && (
+          <CategoriesSidebar
+            categories={categories}
+            activeCategoryId={activeCategoryId}
+            onSelect={setCategoryId}
+          />
+        )}
       </div>
     </div>
   );

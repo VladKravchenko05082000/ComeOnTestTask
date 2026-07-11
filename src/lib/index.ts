@@ -5,4 +5,12 @@ export {
   loginResponseSchema,
   type LoginRequest,
 } from "./schema/authSchema";
+export {
+  gameSchema,
+  categorySchema,
+  gamesResponseSchema,
+  categoriesResponseSchema,
+  type Game,
+  type Category,
+} from "./schema/gamesSchema";
 export { setCookie, getCookie, cn } from "./utils";

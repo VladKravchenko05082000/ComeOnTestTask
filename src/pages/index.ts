@@ -9,3 +9,6 @@ export const LoginPage = lazy(() =>
 export const GamesPage = lazy(() =>
   import("./games/GamesPage").then((m) => ({ default: m.GamesPage })),
 );
+export const NotFoundPage = lazy(() =>
+  import("./not-found/NotFoundPage").then((m) => ({ default: m.NotFoundPage })),
+);

@@ -11,3 +11,4 @@ export {
 export { Button, Input, InputGroup, ErrorBanner, Skeleton, Image } from "./ui";
 export { AuthForm } from "./forms";
 export { UserInfo } from "./user-info";
+export { ErrorBoundary } from "./error-boundary/ErrorBoundary";

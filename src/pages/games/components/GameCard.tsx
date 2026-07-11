@@ -2,7 +2,9 @@ import { Link } from "react-router";
 
 import { Button, ChevronRightIcon } from "@/components";
 
-import type { Game } from "../types";
+import { ROUTES_CONFIG } from "@/lib";
+
+import type { Game } from "@/pages/games/types";
 
 interface GameCardProps {
   game: Game;
@@ -26,7 +28,7 @@ export const GameCard = ({ game }: GameCardProps) => {
         <div className="mt-4 flex justify-end">
           <Button
             as={Link}
-            to={`/games/${game.code}`}
+            to={`/${ROUTES_CONFIG.games}/${game.code}`}
             size="sm"
             className="w-full tablet:w-auto"
           >

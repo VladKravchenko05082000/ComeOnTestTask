@@ -1,9 +1,9 @@
 import type { FC } from "react";
 
-import { Navigate, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 
 import { NonAuthLayout, ProtectedLayout, RootLayout } from "./layouts";
-import { GamePlayPage, GamesPage, LoginPage } from "./pages";
+import { GamePlayPage, GamesPage, LoginPage, NotFoundPage } from "./pages";
 
 import { ROUTES_CONFIG } from "./lib";
 
@@ -23,7 +23,7 @@ export const AppRoutes: FC = () => {
           />
         </Route>
 
-        <Route path="*" element={<Navigate to="/games" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

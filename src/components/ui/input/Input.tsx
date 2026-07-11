@@ -16,7 +16,7 @@ interface InputProps
 }
 
 const iconPosition =
-  "pointer-events-none absolute top-1/2 flex size-4 -translate-y-1/2 items-center justify-center text-muted-foreground";
+  "pointer-events-none absolute top-1/2 flex size-4 -translate-y-1/2 items-center justify-center text-muted-foreground [&>svg]:size-4";
 
 export const Input = ({
   variant,
