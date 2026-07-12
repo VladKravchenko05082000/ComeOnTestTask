@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 
 import { selectIsAuthenticated } from "@/store/authSlice/slice";
 import { useAppSelector } from "@/hooks";

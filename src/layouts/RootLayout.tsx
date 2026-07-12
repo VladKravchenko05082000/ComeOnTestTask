@@ -5,12 +5,14 @@ import { SpinnerIcon } from "@/components";
 
 export const RootLayout: FC = () => {
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
-      <header className="bg-page py-2">
-        <img src="/images/logo.svg" alt="ComeOn" className=" h-8 tablet:h-12" />
+    <div className="flex min-h-dvh flex-col">
+      <header className="sticky top-0 z-40 border-b border-background/5 bg-page/95 backdrop-blur-[6px]">
+        <div className="mx-auto flex h-15 w-full max-w-page items-center px-5">
+          <img src="/images/logo.svg" alt="ComeOn" className="h-8 tablet:h-12" />
+        </div>
       </header>
 
-      <main className="mx-auto w-full max-w-page flex-1 p-8 tablet:px-6">
+      <main className="mx-auto flex w-full max-w-page flex-1 flex-col p-8 tablet:px-6">
         <Suspense
           fallback={
             <div className="flex min-h-[60dvh] items-center justify-center">
@@ -22,9 +24,11 @@ export const RootLayout: FC = () => {
         </Suspense>
       </main>
 
-      <footer className="bg-page p-4 text-center text-sm text-background">
+      <footer className="bg-page p-5 text-center text-sm leading-[1.8] text-background/55">
         <p>All rights reserved by ComeOn Group © 2026</p>
-        <p>Developed by Vladyslav Kravchenko</p>
+        <p>
+          Developed by <strong className="text-brand">Vladyslav Kravchenko</strong>
+        </p>
       </footer>
     </div>
   );

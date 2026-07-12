@@ -43,6 +43,7 @@ export const LoginPage: FC = () => {
             type="password"
             autoComplete="current-password"
             placeholder="Enter your password"
+            defaultValue={state.values.password}
             startIcon={<LockIcon />}
           />
         </InputGroup>

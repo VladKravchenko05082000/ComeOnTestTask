@@ -31,7 +31,7 @@ export const useLoginForm = () => {
     if (state.success) {
       navigate(from, { replace: true });
     }
-  }, [state.success]);
+  }, [state.success, from, navigate]);
 
   return { state, formAction };
 };

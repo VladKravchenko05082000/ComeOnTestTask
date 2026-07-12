@@ -5,6 +5,7 @@ export {
   loginResponseSchema,
   type LoginRequest,
 } from "./schema/authSchema";
+export { playerSchema } from "./schema/playerSchema";
 export {
   gameSchema,
   categorySchema,

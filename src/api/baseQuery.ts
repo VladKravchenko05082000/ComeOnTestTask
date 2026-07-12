@@ -1,21 +1,16 @@
 import { isAxiosError } from "axios";
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
-import type { AxiosError, AxiosRequestConfig } from "axios";
+import type { AxiosRequestConfig } from "axios";
 
 import { axiosInstance } from "./axios";
 
-class ApiError extends Error {
-  readonly status?: number;
-
-  constructor(message: string, status?: number) {
-    super(message);
-    this.name = "ApiError";
-    this.status = status;
-  }
-}
+export type ApiError = {
+  status?: number;
+  message: string;
+};
 
 export function isApiError(error: unknown): error is ApiError {
-  return error instanceof ApiError;
+  return typeof (error as ApiError | undefined)?.message === "string";
 }
 
 export type AxiosBaseQueryArgs = {
@@ -33,12 +28,14 @@ export const axiosBaseQuery =
       return { data: result.data };
     } catch (error) {
       if (isAxiosError(error)) {
-        const axiosError = error as AxiosError;
         return {
-          error: new ApiError(axiosError.message, axiosError.response?.status),
+          error: {
+            status: error.response?.status,
+            message: error.message,
+          },
         };
       }
 
-      return { error: new ApiError("Unknown error") };
+      return { error: { message: "Unknown error" } };
     }
   };
