@@ -10,10 +10,10 @@ All commands run from the project root (this directory).
 - `npm run build` — type-check (`tsc -b`) then production build. Use this to catch type errors; there is no separate typecheck script.
 - `npm run lint` — ESLint over the repo.
 - `npm run preview` — serve the production build.
+- `npm run test` / `npm run test:watch` — run the Vitest suite (jsdom + Testing Library + MSW).
+- `npm run mock` — start the mock backend (json-server) on port 3001.
 
-There is no test runner configured.
-
-The app expects a backend at `VITE_API_URL` (default `http://localhost:3001`). A mock backend lives in `mock/`: `mock-data.json` supplies `games` and `categories`, and `mock-api.cjs` is middleware that handles `POST /login` and `POST /logout` (valid users and passwords are defined at the top of `mock-api.cjs`, e.g. `rebecka` / `secret`). Serve these with json-server; copy `.env.example` to `.env` to point the app at it.
+The app expects a backend at `VITE_API_URL` (default `http://localhost:3001`). A mock backend lives in `mock/`: `mock-data.json` supplies `games` and `categories`, and `mock-api.cjs` is middleware that handles `POST /login` and `POST /logout` (valid users and passwords are defined at the top of `mock-api.cjs`, e.g. `rebecka` / `secret`). Start it with `npm run mock` (`json-server` is pinned to `0.17.4`, the classic CLI that supports `--middlewares`; the v1 betas dropped that flag). Copy `.env.example` to `.env` to point the app at it.
 
 ## Tech stack
 
