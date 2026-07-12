@@ -15,24 +15,26 @@ export const UserInfo = ({ player, className }: UserInfoProps) => {
         <>
           <div
             data-slot="user-info"
-            className={cn("flex items-center gap-3", className)}
+            className={cn("flex items-center gap-4", className)}
           >
             <Image
               src={player.avatar}
               alt={player.name}
-              className="size-8 shrink-0 rounded-full object-cover"
+              className="size-15 shrink-0 rounded-full object-cover ring-3 ring-brand/20"
             />
 
-            <div>
-              <p className="font-bold">{player.name}</p>
+            <div className="min-w-0">
+              <p className="text-lg font-extrabold">{player.name}</p>
               {player.event && (
-                <p className="text-sm text-muted-foreground">{player.event}</p>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  {player.event}
+                </p>
               )}
             </div>
           </div>
         </>
       ) : (
-        <Skeleton className={cn("h-11 w-56", className)} />
+        <Skeleton className={cn("h-15 w-56", className)} />
       )}
     </>
   );

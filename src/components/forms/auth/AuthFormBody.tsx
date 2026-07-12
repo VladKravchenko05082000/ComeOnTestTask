@@ -25,7 +25,7 @@ export const AuthFormBody = ({ submitLabel, children }: AuthFormBodyProps) => {
         className="mt-6"
       >
         <span>{submitLabel}</span>
-        <ChevronRightIcon />
+        <ChevronRightIcon className="transition-transform group-hover/button:translate-x-0.5" />
       </Button>
     </>
   );

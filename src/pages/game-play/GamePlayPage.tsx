@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 import { GameFrame } from "./components/GameFrame";
 
 const gameStageClasses = cn(
-  "relative flex h-84 w-full items-center justify-center overflow-hidden rounded-lg border border-border bg-muted p-4 tablet:h-96",
-  "[&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:size-full [&_iframe]:rounded-lg [&_iframe]:border-0",
+  "relative flex h-84 w-full items-center justify-center overflow-hidden rounded-xl border border-border bg-linear-to-br from-[#fbfcfd] to-[#eef1f4] p-4 shadow-card tablet:h-96",
+  "[&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:size-full [&_iframe]:rounded-xl [&_iframe]:border-0",
 );
 
 export const GamePlayPage: FC = () => {
@@ -21,12 +21,14 @@ export const GamePlayPage: FC = () => {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between gap-4">
-        <Button as={Link} to="/games" size="sm">
-          <ChevronLeftIcon />
+        <Button as={Link} to="/games" variant="secondary" size="sm">
+          <ChevronLeftIcon className="transition-transform group-hover/button:-translate-x-0.5" />
           <span>Back</span>
         </Button>
 
-        {game && <h1 className="truncate text-xl font-bold">{game.name}</h1>}
+        {game && (
+          <h1 className="truncate text-2xl font-extrabold">{game.name}</h1>
+        )}
       </div>
 
       <div className={gameStageClasses}>

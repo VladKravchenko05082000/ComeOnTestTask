@@ -24,12 +24,12 @@ export const AuthForm = ({
   return (
     <form
       action={action}
-      className="w-full max-w-sm rounded-xl border border-border bg-card p-6 shadow-sm tablet:p-8"
+      className="w-full max-w-115 rounded-xl border border-border border-t-3 border-t-brand bg-card p-6 shadow-card tablet:p-8"
     >
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="text-2xl font-extrabold">{title}</h1>
 
       {description && (
-        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        <p className="mt-1.5 text-base text-muted-foreground">{description}</p>
       )}
 
       {error && <ErrorBanner className="mt-6">{error}</ErrorBanner>}

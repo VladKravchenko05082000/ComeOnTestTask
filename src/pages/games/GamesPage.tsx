@@ -17,7 +17,6 @@ import {
 import { selectPlayer } from "@/store/authSlice/slice";
 import { useAppSelector } from "@/hooks";
 
-import { MobileCategories } from "./components/MobileCategories";
 import { SectionHeading } from "./components/SectionHeading";
 import { GameCard } from "./components/GameCard";
 import { CategoriesSidebar } from "./components/CategoriesSidebar";
@@ -41,56 +40,30 @@ export const GamesPage: FC = () => {
   const { search, activeCategoryId, filteredGames, setSearch, setCategoryId } =
     useFilters(games);
 
+  const categoryNameById = new Map(
+    categories.map((category) => [category.id, category.name]),
+  );
+
   return (
     <div>
-      <div className="flex flex-col gap-4 tablet:flex-row tablet:items-start tablet:justify-between">
-        <div>
-          <UserInfo player={player} />
+      <section className="mb-8 flex flex-wrap items-center gap-4 rounded-xl border border-border bg-card px-5 py-4 shadow-card tablet:px-6">
+        <UserInfo player={player} />
 
-          <Button
-            type="button"
-            size="sm"
-            className="mt-4"
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-          >
-            <ChevronLeftIcon />
-            <span>Log Out</span>
-          </Button>
-        </div>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          className="w-full tablet:ml-auto tablet:w-auto"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+        >
+          <ChevronLeftIcon className="transition-transform group-hover/button:-translate-x-0.5" />
+          <span>Log Out</span>
+        </Button>
+      </section>
 
-        <div className="w-full tablet:w-64">
-          <InputGroup label="Search game" htmlFor="search" hideLabel>
-            <Input
-              id="search"
-              type="search"
-              size="sm"
-              placeholder="Search Game"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              endIcon={
-                <SearchIcon
-                  size={14}
-                  className="pointer-events-auto cursor-pointer"
-                />
-              }
-            />
-          </InputGroup>
-        </div>
-      </div>
-
-      {!isCategoriesError && (
-        <div className="mt-8">
-          <MobileCategories
-            categories={categories}
-            activeCategoryId={activeCategoryId}
-            onSelect={setCategoryId}
-          />
-        </div>
-      )}
-
-      <div className="mt-8 flex flex-col gap-8 laptop:flex-row">
-        <section className="flex-1">
+      <div className="grid items-start gap-7 laptop:grid-cols-[minmax(0,1fr)_300px]">
+        <section>
           <SectionHeading className="mb-4">Games</SectionHeading>
 
           {isGamesError ? (
@@ -98,11 +71,14 @@ export const GamesPage: FC = () => {
               Unable to load games. Please try again later.
             </ErrorBanner>
           ) : isLoadingGames ? (
-            <ul className="divide-y divide-border">
+            <ul className="grid gap-4">
               {Array.from({ length: 3 }).map((_, index) => (
-                <li key={index} className="py-6 first:pt-0">
-                  <div className="flex flex-col gap-4 tablet:flex-row">
-                    <Skeleton className="h-20 w-full tablet:w-32 tablet:shrink-0" />
+                <li
+                  key={index}
+                  className="rounded-xl border border-border bg-card p-5 shadow-card"
+                >
+                  <div className="flex flex-col gap-5 tablet:flex-row">
+                    <Skeleton className="h-38 w-full tablet:size-33 tablet:shrink-0" />
                     <div className="flex-1 space-y-2">
                       <Skeleton className="h-5 w-40" />
                       <Skeleton className="h-4 w-full" />
@@ -117,23 +93,42 @@ export const GamesPage: FC = () => {
               No games match your filters.
             </p>
           ) : (
-            <ul className="divide-y divide-border">
+            <ul className="grid gap-4">
               {filteredGames.map((game) => (
-                <li key={game.code} className="py-6 first:pt-0">
-                  <GameCard game={game} />
+                <li key={game.code}>
+                  <GameCard
+                    game={game}
+                    categoryNames={game.categoryIds
+                      .map((id) => categoryNameById.get(id))
+                      .filter((name): name is string => Boolean(name))}
+                  />
                 </li>
               ))}
             </ul>
           )}
         </section>
 
-        {!isCategoriesError && !isLoadingCategories && (
-          <CategoriesSidebar
-            categories={categories}
-            activeCategoryId={activeCategoryId}
-            onSelect={setCategoryId}
-          />
-        )}
+        <aside className="order-first grid gap-5 laptop:sticky laptop:top-22 laptop:order-0">
+          <InputGroup label="Search game" htmlFor="search" hideLabel>
+            <Input
+              id="search"
+              type="search"
+              placeholder="Search Game"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              startIcon={<SearchIcon />}
+              className="border-border shadow-card"
+            />
+          </InputGroup>
+
+          {!isCategoriesError && !isLoadingCategories && (
+            <CategoriesSidebar
+              categories={categories}
+              activeCategoryId={activeCategoryId}
+              onSelect={setCategoryId}
+            />
+          )}
+        </aside>
       </div>
     </div>
   );

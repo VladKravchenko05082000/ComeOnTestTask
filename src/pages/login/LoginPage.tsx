@@ -2,13 +2,20 @@ import { type FC } from "react";
 
 import { useLoginForm } from "./hooks/useLoginForm";
 
-import { AuthForm, Input, InputGroup, LockIcon, UserIcon } from "@/components";
+import {
+  AuthForm,
+  Input,
+  InputGroup,
+  LockIcon,
+  PasswordInput,
+  UserIcon,
+} from "@/components";
 
 export const LoginPage: FC = () => {
   const { state, formAction } = useLoginForm();
 
   return (
-    <div className="flex min-h-[50vh] items-center justify-center py-8">
+    <div className="flex flex-1 items-center justify-center py-8">
       <AuthForm
         title="Sign in"
         description="Enter your credentials to continue."
@@ -26,7 +33,7 @@ export const LoginPage: FC = () => {
             name="username"
             type="text"
             autoComplete="username"
-            placeholder="Enter your username"
+            placeholder="Username"
             defaultValue={state.values.username}
             startIcon={<UserIcon />}
           />
@@ -37,12 +44,11 @@ export const LoginPage: FC = () => {
           htmlFor="password"
           error={state.fieldErrors?.password}
         >
-          <Input
+          <PasswordInput
             id="password"
             name="password"
-            type="password"
             autoComplete="current-password"
-            placeholder="Enter your password"
+            placeholder="Password"
             defaultValue={state.values.password}
             startIcon={<LockIcon />}
           />

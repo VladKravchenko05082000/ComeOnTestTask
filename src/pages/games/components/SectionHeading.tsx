@@ -12,9 +12,7 @@ export const SectionHeading = ({
   children,
 }: SectionHeadingProps) => {
   return (
-    <h2
-      className={cn("border-b border-border pb-1 text-xl font-bold", className)}
-    >
+    <h2 className={cn("text-2xl font-extrabold", className)}>
       {children}
     </h2>
   );

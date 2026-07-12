@@ -7,7 +7,7 @@ import { inputVariants } from "./inputVariants";
 
 type InputVariants = VariantProps<typeof inputVariants>;
 
-interface InputProps
+export interface InputProps
   extends
     Omit<ComponentPropsWithoutRef<"input">, "size">,
     Omit<InputVariants, "hasStartIcon" | "hasEndIcon"> {

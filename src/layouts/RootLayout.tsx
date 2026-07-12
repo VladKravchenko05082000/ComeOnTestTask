@@ -1,14 +1,23 @@
 import { Suspense, type FC } from "react";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 
-import { SpinnerIcon } from "@/components";
+import { LogoIcon, SpinnerIcon } from "@/components";
 
 export const RootLayout: FC = () => {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-40 border-b border-background/5 bg-page/95 backdrop-blur-[6px]">
-        <div className="mx-auto flex h-15 w-full max-w-page items-center px-5">
-          <img src="/images/logo.svg" alt="ComeOn" className="h-8 tablet:h-12" />
+        <div className="mx-auto flex h-15 w-full max-w-page items-center px-8 tablet:px-6">
+          <Link
+            to="/"
+            aria-label="ComeOn — home"
+            className="rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+          >
+            <LogoIcon
+              aria-hidden="true"
+              className="h-5 w-27 tablet:h-7 tablet:w-38"
+            />
+          </Link>
         </div>
       </header>
 

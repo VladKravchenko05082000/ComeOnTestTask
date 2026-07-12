@@ -5,11 +5,12 @@ export const inputVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-input focus:border-primary",
+        default:
+          "border-input hover:border-foreground/30 focus:border-brand focus:ring-3 focus:ring-brand/15 focus:hover:border-brand",
         invalid: "border-destructive-border focus:border-destructive",
       },
       size: {
-        default: "h-10 px-3 text-base",
+        default: "h-12 px-3 text-base",
         sm: "h-8 px-3 text-sm",
       },
       hasStartIcon: {
@@ -20,7 +21,7 @@ export const inputVariants = cva(
       },
     },
     compoundVariants: [
-      { size: "default", hasStartIcon: true, class: "pl-9" },
+      { size: "default", hasStartIcon: true, class: "pl-10" },
       { size: "default", hasEndIcon: true, class: "pr-9" },
       { size: "sm", hasStartIcon: true, class: "pl-8" },
       { size: "sm", hasEndIcon: true, class: "pr-8" },

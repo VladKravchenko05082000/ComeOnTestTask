@@ -1,8 +1,11 @@
 export { IconWrapper } from "./IconWrapper";
+export { LogoIcon } from "./icons/LogoIcon";
 export { UserIcon } from "./icons/UserIcon";
 export { LockIcon } from "./icons/LockIcon";
 export { SearchIcon } from "./icons/SearchIcon";
 export { ChevronRightIcon } from "./icons/ChevronRightIcon";
 export { ChevronLeftIcon } from "./icons/ChevronLeftIcon";
 export { ErrorCircleIcon } from "./icons/ErrorCircleIcon";
+export { EyeIcon } from "./icons/EyeIcon";
+export { EyeOffIcon } from "./icons/EyeOffIcon";
 export { SpinnerIcon } from "./icons/SpinnerIcon";
